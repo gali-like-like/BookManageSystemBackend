@@ -2,12 +2,20 @@ package com.sky.entity;
 
 import java.math.BigDecimal;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+@Schema(description = "图书实列")
 public class Book {
+	@Schema(description = "图书id,id唯一标识符")
     private Integer id;
-    private String bookName;
+	@Schema(description = "图书名字")
+	private String bookName;
+	@Schema(description = "图书作者")
     private String bookauthor;
+	@Schema(description = "图书价格")
     private BigDecimal bookprice;
+	@Schema(description = "图书数量")
     private Integer bookamount;
+	@Schema(description = "图书类型")
     private String booktype;
 
     @Override

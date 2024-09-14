@@ -22,7 +22,7 @@ public class BeanListner implements BeanPostProcessor {
 	@Override
 	public Object postProcessAfterInitialization(Object bean,String beanName) throws BeansException {
 		if(beanName.contains("book")) {
-			logger.info(String.format("%s 即将初始化",beanName));
+			logger.info(String.format("%s 初始化完成",beanName));
 		}
 		return bean;
     }
