@@ -2,22 +2,22 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sky.mapper.BookMapper">
 	<update id="updateBook">
-	 	update t_book 
+	 	update t_book
 	 	<set>
-			<if test = "bookname != null">
-				bookname = #{bookname},
-			</if>				 	
-			<if test = "bookauthor != null">
-				bookauthor = #{bookauthor},
+			<if test = "bookName != null">
+				book_name = #{bookName},
 			</if>
-			<if test = "bookprice != null">
-				bookprice = #{bookprice},
+			<if test = "bookAuthor != null">
+				book_author = #{bookAuthor},
 			</if>
-			<if test = "bookamount != null">
-				bookamount = #{bookamount},
+			<if test = "bookPrice != null">
+				book_price = #{bookPrice},
 			</if>
-			<if test = "booktype != null">
-				booktype = #{booktype}
+			<if test = "bookAmount != null">
+				book_amount = #{bookAmount},
+			</if>
+			<if test = "bookType != null">
+				book_type = #{bookType}
 			</if>
 	 	</set>
 		<where>

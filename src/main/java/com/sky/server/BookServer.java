@@ -1,6 +1,11 @@
 package com.sky.server;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,11 +24,18 @@ public class BookServer {
     private BookMapper mapper;
     //ApplicationContext.getBean()
 
-    @Transactional(rollbackFor = Exception.class)
-    public PageVo getBooks(Integer cur) {
-        List<Book> books = mapper.getBooks((cur-1)*10);
-        Integer total = mapper.getTotal();//总记录数
-        PageVo<Book> pageVo = PageVo.getPageVo(total, total, books);
+    public PageVo getBooks(Integer cur) throws ExecutionException, InterruptedException, TimeoutException {
+        CompletableFuture<List<Book>> futureGetBooks = CompletableFuture.supplyAsync(() -> {
+            return mapper.getBooks((cur-1)*10);
+        });
+        CompletableFuture<Integer> futureGetTotal = CompletableFuture.supplyAsync(() -> {
+            return mapper.getTotal();
+        });
+        CompletableFuture<Void> result =  CompletableFuture.allOf(futureGetBooks,futureGetTotal);
+        result.get(3,TimeUnit.SECONDS);
+        Integer total = futureGetTotal.get();
+        Integer totalPage = total%10==0?total/10:total/10+1;
+        PageVo<Book> pageVo = PageVo.getPageVo(total, totalPage, futureGetBooks.get());
         return pageVo;
     }
     //查询总记录数
@@ -32,12 +44,25 @@ public class BookServer {
         logger.info("total:{}",total);
         return mapper.getTotal();
     }
-    
-    public void removeBookById(Integer id) {
-    	mapper.removeBookById(id);
+
+    public void removeBookById(Integer id) throws ExecutionException, InterruptedException, TimeoutException {
+        CompletableFuture<Void> future = CompletableFuture.runAsync(() -> {
+            mapper.removeBookById(id);
+        });
+        future.get(3,TimeUnit.SECONDS);
+        mapper.removeBookById(id);
     }
-    
-    public Book updateBook(Book book) {
-    	return mapper.updateBook(book);
+
+    public Book updateBook(Book book) throws ExecutionException, InterruptedException, TimeoutException {
+        CompletableFuture<Void> future = CompletableFuture.runAsync(() -> mapper.updateBook(book));
+        future.get(3,TimeUnit.SECONDS);
+        return book;
+    }
+
+    public void addBook(Book book) throws ExecutionException, InterruptedException, TimeoutException {
+        CompletableFuture<Void> future = CompletableFuture.runAsync(() -> {
+            mapper.addBook(book);
+        });
+        future.get(3, TimeUnit.SECONDS);
     }
 }

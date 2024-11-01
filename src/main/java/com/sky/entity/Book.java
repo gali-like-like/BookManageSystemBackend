@@ -1,45 +1,47 @@
 package com.sky.entity;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 @Schema(description = "图书实列")
-public class Book {
+public class Book implements Serializable {
+    private static final long serialVersionUID = 1L;
 	@Schema(description = "图书id,id唯一标识符")
     private Integer id;
 	@Schema(description = "图书名字")
 	private String bookName;
 	@Schema(description = "图书作者")
-    private String bookauthor;
+    private String bookAuthor;
 	@Schema(description = "图书价格")
-    private BigDecimal bookprice;
+    private BigDecimal bookPrice;
 	@Schema(description = "图书数量")
-    private Integer bookamount;
+    private Integer bookAmount;
 	@Schema(description = "图书类型")
-    private String booktype;
+    private String bookType;
 
     @Override
     public String toString() {
         return "Book{" +
                 "id=" + id +
                 ", bookName='" + bookName + '\'' +
-                ", bookauthor='" + bookauthor + '\'' +
-                ", bookprice=" + bookprice +
-                ", bookamount=" + bookamount +
-                ", booktype='" + booktype + '\'' +
+                ", bookauthor='" + bookAuthor + '\'' +
+                ", bookprice=" + bookPrice +
+                ", bookamount=" + bookAmount +
+                ", booktype='" + bookType + '\'' +
                 '}';
     }
 
     public Book() {
     }
 
-    public Book(Integer id, String bookName, String bookauthor, BigDecimal bookprice, Integer bookamount, String booktype) {
+    public Book(Integer id, String bookName, String bookAuthor, BigDecimal bookPrice, Integer bookAmount, String bookType) {
         this.id = id;
         this.bookName = bookName;
-        this.bookauthor = bookauthor;
-        this.bookprice = bookprice;
-        this.bookamount = bookamount;
-        this.booktype = booktype;
+        this.bookAuthor = bookAuthor;
+        this.bookPrice = bookPrice;
+        this.bookAmount = bookAmount;
+        this.bookType = bookType;
     }
 
     public Integer getId() {
@@ -58,35 +60,35 @@ public class Book {
         this.bookName = bookName;
     }
 
-    public String getBookauthor() {
-        return bookauthor;
+    public String getBookAuthor() {
+        return bookAuthor;
     }
 
-    public void setBookauthor(String bookauthor) {
-        this.bookauthor = bookauthor;
+    public void setBookAuthor(String bookAuthor) {
+        this.bookAuthor = bookAuthor;
     }
 
-    public BigDecimal getBookprice() {
-        return bookprice;
+    public BigDecimal getBookPrice() {
+        return bookPrice;
     }
 
-    public void setBookprice(BigDecimal bookprice) {
-        this.bookprice = bookprice;
+    public void setBookPrice(BigDecimal bookPrice) {
+        this.bookPrice = bookPrice;
     }
 
-    public Integer getBookamount() {
-        return bookamount;
+    public Integer getBookAmount() {
+        return bookAmount;
     }
 
-    public void setBookamount(Integer bookamount) {
-        this.bookamount = bookamount;
+    public void setBookAmount(Integer bookAmount) {
+        this.bookAmount = bookAmount;
     }
 
-    public String getBooktype() {
-        return booktype;
+    public String getBookType() {
+        return bookType;
     }
 
-    public void setBooktype(String booktype) {
-        this.booktype = booktype;
+    public void setBookType(String bookType) {
+        this.bookType = bookType;
     }
 }

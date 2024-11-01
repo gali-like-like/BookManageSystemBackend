@@ -2,8 +2,11 @@ package com.sky.entity;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
+import java.io.Serializable;
+
 @Schema(description = "响应结果的封装")
-public class Result {
+public class Result implements Serializable {
+    private static final long serialVersionUID = 1L;
 	@Schema(description = "响应状态码,1表示成功,0表示失败")
     private Integer code;
 	@Schema(description = "响应消息")
@@ -37,13 +40,13 @@ public class Result {
 
     public Result() {
     }
-    
+
     private Result(Integer code, String msg, Object data) {
         this.code = code;
         this.msg = msg;
         this.data = data;
     }
-	
+
 	// 返回正确结果
 	public static Result success(String msg,Object data) {
 	    return new Result(1,msg,data);
@@ -52,7 +55,7 @@ public class Result {
 	public static Result fail(String msg) {
 	    return new Result(0,msg,null);
 	}
-	
+
 	@Override
 	public String toString() {
 	    return "Result{" +
